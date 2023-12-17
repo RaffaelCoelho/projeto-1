@@ -1,0 +1,131 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <string.h>
+
+struct dados_do_usuario
+{
+
+    char nome[200];
+    char tipo_da_conta[200];
+    float saldo;
+};
+
+struct dados_do_usuario criar_conta()
+{
+    struct dados_do_usuario usuario;
+
+    printf("Digite seu nome:");
+    scanf("%s", &usuario.nome);
+
+    fflush(stdin);
+
+    printf("Digite seu saldo:");
+    scanf("%f", &usuario.saldo);
+
+    fflush(stdin);
+
+    printf("Digite o tipo da conta: \nCorrente ou Poupança\n");
+    scanf("%s", &usuario.tipo_da_conta);
+
+    fflush(stdin);
+
+    return usuario;
+};
+
+void dados(struct dados_do_usuario *usuario)
+{
+    system("cls");
+    fflush(stdin);
+    printf("\nNome do titular: %s", usuario->nome);
+    printf("\nTipo de conta: %s", usuario->tipo_da_conta);
+    printf("\nSaldo da conta: %.2f", usuario->saldo);
+}
+
+void deposito(struct dados_do_usuario *usuario)
+{
+
+    float valor_deposito;
+
+    system("cls");
+    fflush(stdin);
+
+    printf("Digite o valor que deseja depositar:");
+    scanf("%f", &valor_deposito);
+
+    usuario->saldo = usuario->saldo + valor_deposito;
+}
+
+void saque(struct dados_do_usuario *usuario)
+{
+
+    float valor_saque;
+
+    system("cls");
+    fflush(stdin);
+
+    printf("Digite o valor que deseja sacar:");
+    scanf("%f", &valor_saque);
+
+    usuario->saldo = usuario->saldo - valor_saque;
+}
+
+int main()
+{
+
+    struct dados_do_usuario minha_conta = criar_conta();
+    int codigo;
+    int i;
+
+    system("cls");
+    printf("----------MENU----------");
+    printf("\n\nQual funçao deseja realizar?");
+
+    for (i = 0; i < 20; i++)
+    {
+        printf("\n\n-----Funções disponiveis-----");
+        printf("\n\n1 - Depositar");
+        printf("\n2 - Sacar");
+        printf("\n3 - Ver informaçoes da conta");
+        printf("\n4 - Sair do programa");
+
+        fflush(stdin);
+
+        printf("\n\nDigite seu codigo:");
+        scanf("%d", &codigo);
+
+        switch (codigo)
+        {
+        case 1:
+
+            deposito(&minha_conta);
+            printf("\n\nDeposito realizado com sucesso!!");
+            break;
+
+        case 2:
+
+            saque(&minha_conta);
+            printf("\n\nSaque realizado com sucesso!!");
+            break;
+
+        case 3:
+
+            dados(&minha_conta);
+
+            break;
+
+        case 4:
+
+            abort();
+
+            break;
+
+        default:
+
+            printf("\nCodigo invalido....\nTente novamente");
+
+            break;
+        }
+    }
+    return 0;
+}
